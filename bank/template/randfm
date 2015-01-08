@@ -1,0 +1,7 @@
+osc type=sine
+mod input:=1 amp=7.5|2.3|2.0|5.6|9.0
+osc phase:=2 type=saw|square harmonics=2|3|5|7|9|11|13|17|19|23
+env amp:=3 t1=0.0005|0.3 t2=0.1|0.5 l3=0.9|0.7 t4=0.1
+osc type=sine frequency=0.125|0.25|0.5|1.0|2.0 detune=0
+mod input:=5 amp=0.002 offset=0.002
+dly input:=4 time:=6 time=0.1 amount=0.3|0.5 feedback=0.6|0.3

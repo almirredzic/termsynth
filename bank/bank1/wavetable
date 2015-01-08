@@ -1,0 +1,6 @@
+osc type=triangle
+osc type=square
+osc type=saw
+env t1=1.5 l1=2.0 t2=1.8 l3=1.0 t4=1.8
+mix a:=1 b:=2 c:=3 crossfade:=4
+env amp:=5 t1=1.5 t2=1.8 l3=1.0 t4=1.8

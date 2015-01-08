@@ -1,0 +1,7 @@
+osc type=pulse pulsewidth=15 harmonics=32
+flt input:=1 type=bandpass cutoff=hz:400 resonance=0.99
+flt input:=1 type=bandpass cutoff=hz:1700 resonance=0.89
+flt input:=1 type=bandpass cutoff=hz:2600 resonance=0.69
+mix a:=2 b:=3 c:=4
+env amp:=5 t1=0.0005 t2=0.1 l3=1.0 t4=0.1
+mod input:=6 amp=0.33

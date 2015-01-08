@@ -1,0 +1,7 @@
+osc type=square detune=1.0
+osc type=pulse pulsewidth=35 detune=semi:14
+mix a:=1 b:=2
+mod input:=3 amp=0.5
+env t1=0.0001 l1=0.5 t2=0.02 l3=0.1 t4=1.0
+flt input:=4 cutoff:=5 type=lowpass cutoff=0.0 resonance=0.55
+env amp:=6 t1=0.0001 t2=0.15 l3=0.0 t4=0.15

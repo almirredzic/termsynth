@@ -1,0 +1,9 @@
+osc name=osc1 type=saw harmonics=3 detune=cent:-2
+osc name=osc2 type=saw harmonics=3 detune=cent:2
+mix name=src1 a:=osc1 b:=osc2
+mod name=src2 input:=src1 amp=0.5
+pol name=cheb3 input:=src2 a3=4.0 a1=-3.0
+pol name=cheb5 input:=src2 a5=16.0 a3=-20.0 a1=5.0
+mod name=shaperratio source=controller number=1
+mix name=shaped a:=cheb3 b:=cheb5 crossfade:=shaperratio
+env name=ampenv amp:=shaped t1=0.0005 t2=0.1 l3=0.9 t4=0.5

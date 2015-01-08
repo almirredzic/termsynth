@@ -1,0 +1,6 @@
+mod name=mod1 source=pitchwheel
+osc name=osc1 pitch:=mod1 type=saw harmonics=128
+mod name=mod2 source=controller number=91 amp=0.3 offset=0.01
+mod name=mod3 source=controller number=93 amp=0.96
+flt name=flt1 input:=osc1 cutoff:=mod2 resonance:=mod3 type=lowpass cutoff=0.0
+env name=env1 amp:=flt1 t1=0.005 t2=0.1 l3=0.9 t4=0.1

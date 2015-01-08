@@ -1,0 +1,10 @@
+osc type=sine detune=1.0
+env amp:=-1 t1=0.005 t2=1.0 l3=0 t4=1.0
+osc type=sine detune=2.0
+env amp:=-1 t1=0.005 t2=0.5 l3=0 t4=0.5
+osc type=sine detune=3.0
+env amp:=-1 t1=0.005 t2=0.25 l3=0 t4=0.25
+osc type=sine detune=16.0
+env amp:=-1 t1=0.005 t2=0.125 l3=0 t4=0.125
+mix a:=2 b:=4 c:=6 d:=8
+mod input:=9 amp=0.25

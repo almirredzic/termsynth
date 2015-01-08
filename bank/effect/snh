@@ -1,0 +1,3 @@
+mod source=controller amp=0.008
+clk time:=-1 time=0.00005
+mix a:=-0 b:=-3 crossfade:=-1

@@ -1,0 +1,4 @@
+env t1=0.0005 l1=1.53 t2=2.0 l3=0 t4=2.0
+osc amp:=1 type=sine detune=semi:4
+env t1=0.0005 l1=1.00 t2=2.0 l3=0 t4=2.0
+osc amp:=3 phase:=2 type=sine detune=1.0

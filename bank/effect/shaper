@@ -1,0 +1,5 @@
+pol name=cheb3 input:=-1 a3=4.0 a1=-3.0
+pol name=cheb5 input:=-2 a5=16.0 a3=-20.0 a1=5.0
+mod name=shaperratio source=controller number=1
+mix name=shaped a:=cheb3 b:=cheb5 crossfade:=shaperratio
+env name=ampenv t1=0.0005 t2=0.1 l3=0.9 t4=0.5 amp:=shaped

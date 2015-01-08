@@ -1,0 +1,5 @@
+osc type=sine detune=semi:-19,cent:52
+env amp:=1 t1=0.0001 t2=0.05 l3=0.0 t4=0.1
+mod input:=2 amp=25.0
+osc phase:=3 type=sine detune=semi:-12
+env amp:=4 t1=0.0001 t2=0.2 l3=0.0 t4=0.2

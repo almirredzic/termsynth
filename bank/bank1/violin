@@ -1,0 +1,5 @@
+osc type=sine frequency=1.0 detune=0.0
+mod input:=1 amp=0.005
+osc pitch:=2 type=saw harmonics=6 detune=2.0
+env amp:=3 t1=0.1 t2=0.1 l3=0.99 t4=0.3
+dly input:=4 time=0.2 amount=0.3

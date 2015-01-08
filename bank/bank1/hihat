@@ -1,0 +1,4 @@
+mod input:=+1 amp=100
+osc phase:=-1 type=sine detune=0.25
+flt input:=-1 type=highpass cutoff=0.4
+env amp:=-1 t1=0.0001 t2=0.1 l3=0.0 t4=0.1

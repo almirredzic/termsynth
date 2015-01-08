@@ -1,0 +1,4 @@
+osc type=square harmonics=5 detune=0.5
+env amp:=1 t1=0.15 l1=5.0 t2=0.1 l3=4.0 t4=0.1
+osc phase:=2 type=sine detune=0.5
+env amp:=3 t1=0.1 t2=0.1 l3=0.8 t4=0.1

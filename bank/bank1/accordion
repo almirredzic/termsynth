@@ -1,0 +1,8 @@
+osc type=pulse pulsewidth=15 detune=1.0
+osc type=pulse pulsewidth=35 detune=cent:15
+mix a:=1 b:=2
+mod input:=3 amp=0.5
+osc type=sine detune=0 frequency=12.0
+mod input:=5 amp=0.05 offset=0.9
+mul a:=4 b:=6
+env amp:=7 t1=0.2 t2=2.0 l3=0.99 t4=0.2

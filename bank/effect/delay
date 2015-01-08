@@ -1,0 +1,3 @@
+osc type=sine detune=0 frequency=0.25
+mod input:=-1 amp=0.004 offset=0.004
+dly time=0.25 amount=0.5 input:=-3 feedback=0.5 time:=-1

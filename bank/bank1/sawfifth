@@ -1,0 +1,10 @@
+osc type=saw harmonics=4
+osc type=saw harmonics=4 detune=semi:7
+mix a:=1 b:=2
+mod input:=3 amp=0.5
+env t1=0.8 l1=0.9 t2=0.1 l3=0.89 t4=2.0
+flt input:=4 cutoff:=5 type=lowpass cutoff=0.05
+env amp:=6 t1=0.2 t2=0.1 l3=0.99 t4=2.0
+osc type=sine frequency=0.25 detune=0
+mod input:=8 amp=0.005 offset=0.005
+dly input:=7 time:=9 time=0.05 amount=0.5 feedback=0

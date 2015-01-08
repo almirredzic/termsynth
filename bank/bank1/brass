@@ -1,0 +1,9 @@
+osc type=sine detune=semi:-84
+mod input:=1 amp=0.4
+osc phase:=2 type=saw detune=1.0
+osc type=triangle frequency=14.25 detune=0.0
+mod input:=4 amp=0.05 offset=0.95
+env amp:=5 t1=1.75 l1=0.85 t2=1.0 l3=0.35 t4=0.04
+flt input:=3 cutoff:=6 type=lowpass resonance=0.25 cutoff=0.0
+env amp:=7 t1=0.0001 t2=0.04 l3=0.99 t4=0.04
+dly input:=8 time=0.05 feedback=0.5 amount=0.6

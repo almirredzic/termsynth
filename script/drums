@@ -1,0 +1,20 @@
+midichannel 9
+startnote 36
+endnote 36
+read bank1/kick
+nextpatch
+midichannel 9
+startnote 42
+endnote 42
+read bank1/hihat
+nextpatch
+midichannel 9
+startnote 38
+endnote 38
+read bank1/snare
+nextpatch
+midichannel 9
+startnote 39
+endnote 39
+read bank1/clap
+nextpatch

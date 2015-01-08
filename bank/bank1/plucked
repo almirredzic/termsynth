@@ -1,0 +1,12 @@
+mod name=noiseamount input:=noise amp=100
+osc name=noise phase:=noiseamount type=sine detune=0 frequency=100
+mod name=envtime source=1/frequency
+clk name=clock time:=envtime
+mix name=counter a:=counter b:=clock
+seq name=noiseenv step:=counter steps=2 wrap=no s0=1.0 s1=0.0
+mul name=source a:=noise b:=noiseenv
+mix name=mix a:=source b:=filter
+mod name=delaytime source=1/frequency amp=-1.0 offset=0.125
+dly name=delay input:=mix time:=delaytime time=0.125 amount=1.0 feedback=0
+flt name=filter input:=delay type=lowpass cutoff=0.99
+env name=ampenv amp:=mix t1=0.0005 t2=2.0 l3=0.0 t4=2.0

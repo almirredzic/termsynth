@@ -1,0 +1,6 @@
+env t1=0.0001 t2=1.5 l3=0.8 t4=1.0
+mod input:=1 amp=0.5 offset=0.5
+osc type=saw harmonics=6 detune=cent:-4
+osc type=saw harmonics=6 detune=cent:4
+mix a:=3 b:=4 crossfade:=2
+env amp:=5 t1=0.0001 t2=1.5 l3=0.2 t4=1.0

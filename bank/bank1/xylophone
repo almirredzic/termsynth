@@ -1,0 +1,10 @@
+osc type=triangle detune=semi:34
+osc type=triangle detune=semi:12
+mix a:=1 b:=2
+mod input:=3 amp=0.5
+env t1=0.0001 l1=0.6 t2=0.5 l3=0.3 t4=0.5
+flt input:=4 cutoff:=5 type=lowpass cutoff=0.2
+env amp:=6 t1=0.0001 t2=1.8 l3=0.0 t4=1.8
+osc type=sine detune=0.0 frequency=7.5
+mod input:=8 amp=0.1 offset=0.9
+mul a:=7 b:=9

@@ -1,0 +1,6 @@
+osc type=sine detune=1.00
+osc type=sine detune=2.71
+osc type=sine detune=5.15
+osc type=sine detune=12.2
+mix a:=1 b:=2 c:=3 d:=4
+env amp:=5 t1=0.005 l1=0.25 t2=0.4 l3=0 t4=0.2

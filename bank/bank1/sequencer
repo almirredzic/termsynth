@@ -1,0 +1,5 @@
+clk time=0.5
+mix a:=-0 b:=-1
+seq step:=-1 steps=4 s0=0 s1=1 s2=-1 s3=2
+osc pitch:=-1
+env amp:=-1

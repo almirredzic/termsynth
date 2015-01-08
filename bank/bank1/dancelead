@@ -1,0 +1,7 @@
+osc type=square detune=cent:-6
+osc type=square detune=cent:16
+mix a:=1 b:=2
+mod input:=3 amp=0.5
+env t1=0.0001 t2=0.55 l3=0.0 t4=1.0
+flt input:=4 cutoff:=5 type=lowpass cutoff=0.01
+env amp:=6 t1=0.0001 t2=0.5 l3=0.5 t4=0.1

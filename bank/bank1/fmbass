@@ -1,0 +1,8 @@
+osc type=sine detune=12.11
+env amp:=1 t1=0.005 l1=0.9 t2=0.5 l3=0.0 t4=0.05
+osc phase:=2 type=sine detune=0.5
+osc type=sine detune=0.5
+mix a:=3 b:=4
+env amp:=5 t1=0.005 t2=0.1 l3=0.5 t4=0.05
+osc phase:=6 type=sine detune=1.0
+env amp:=7 t1=0.005 t2=0.1 l3=0.5 t4=0.05

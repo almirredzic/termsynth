@@ -1,0 +1,21 @@
+mod name=amt input:=noi amp=100
+osc name=noi phase:=amt type=sine detune=0 frequency=100
+mod name=fr1 source=frequency amp=1.0
+mod name=fr2 source=frequency amp=3.0
+mod name=fr3 source=frequency amp=5.0
+flt name=lp1 input:=noi cutoff:=fr1 type=lowpass cutoff=0.0
+flt name=hp1 input:=lp1 cutoff:=fr1 type=highpass cutoff=0.0
+flt name=bp1 input:=hp1 cutoff:=fr1 type=bandpass cutoff=0.0 resonance=0.999
+flt name=lp2 input:=noi cutoff:=fr2 type=lowpass cutoff=0.0
+flt name=hp2 input:=lp2 cutoff:=fr2 type=highpass cutoff=0.0
+flt name=bp2 input:=hp2 cutoff:=fr2 type=bandpass cutoff=0.0 resonance=0.999
+flt name=lp3 input:=noi cutoff:=fr3 type=lowpass cutoff=0.0
+flt name=hp3 input:=lp3 cutoff:=fr3 type=highpass cutoff=0.0
+flt name=bp3 input:=hp3 cutoff:=fr3 type=bandpass cutoff=0.0 resonance=0.999
+osc name=lfo type=sine detune=0.0 frequency=1.0
+mod name=frm input:=lfo amp=0.01
+osc name=squ pitch:=frm type=square harmonics=5
+mix name=mix a:=bp1 b:=bp2 c:=bp3
+env name=en1 amp:=squ t1=0.3 l1=0.55 t2=0.1 l3=0.5 t4=0.1
+env name=en2 amp:=mix t1=0.0005 l1=0.15 t2=0.3 l3=0.075 t4=0.09
+mix a:=en1 b:=en2

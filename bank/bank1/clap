@@ -1,0 +1,9 @@
+mod input:=+1 amp=100
+osc phase:=-1 detune=0 frequency=100
+flt input:=-1 type=highpass cutoff=hz:1000 resonance=0.99
+flt input:=-1 type=lowpass cutoff=hz:4000
+env amp:=-1 t0=0.000 t1=0.0001 l1=0.80 t2=0.02 l3=0.0 t4=0.02
+env amp:=-2 t0=0.011 t1=0.0001 l1=0.90 t2=0.02 l3=0.0 t4=0.02
+env amp:=-3 t0=0.023 t1=0.0001 l1=0.75 t2=0.02 l3=0.0 t4=0.02
+env amp:=-4 t0=0.034 t1=0.0001 l1=0.95 t2=0.15 l3=0.0 t4=0.15
+mix a:=-1 b:=-2 c:=-3 d:=-4
