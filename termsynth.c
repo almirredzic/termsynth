@@ -358,6 +358,7 @@ void add_line_to_list(list *l, const char *format, ...) {
     va_list va;
     va_start(va, format);
     vsprintf(message, format, va);
+    va_end(va);
     if (ui.debug == 0 && strncmp(message, "DEBUG:", 6) == 0) return;
     strcpy(l->data[l->buffer_pos], message);
     if (l->total < LIST_LINES) l->total++;
@@ -467,7 +468,6 @@ void *io_thread_function() {
     new_tio.c_cc[VMIN] = 0;
     tcsetattr(STDIN_FILENO, TCSANOW, &new_tio); // set the new settings immediately
     unsigned char c[32];
-    int normalinput = 0;
     do { 
         usleep(10000);
         int chcount = 0;
@@ -619,13 +619,6 @@ void clean_all() {
     }
 }
 
-int find_string_in_array(char *ps[], int np, const char *p) {
-    int i;
-    for (i = 0; i < np; i++)
-        if (strcmp(ps[i], p) == 0) return i;
-    return -1;
-}
-
 char* get_random_option(char *ret) {
     char *tp, *tv;
     char input_copy[100];
@@ -765,7 +758,7 @@ int parse_module_definition(patch *ppatch, const char *line, int parsed_module) 
             icount += 1;
         }
         else { // named int constant
-            for (k = 0; k < 27; k++)
+            for (k = 0; k <= 24; k++)
                 if (strncmp(constants[k], ret, strlen(ret)) == 0) {
                     pmodule->ip[icount] = atoi(constants[k] + strlen(ret) + 1);
                     add_line_to_list(&ui.sidelist, "DEBUG: ip[%d]: %d from constant %s", icount, pmodule->ip[icount], ret);
@@ -822,7 +815,6 @@ int parse_module_definition(patch *ppatch, const char *line, int parsed_module) 
 int read_patch_def_from_files(patch *ppatch, char **fileslist, int filestotal) {
     int parsed_module;
     char file_line[512];
-    FILE *file;
     // stop all voices first
     int v, f, m, n, t;
     for (v = 0; v < VOICES; v++) patches[ui.selected_patch].voices[v].active = 0;
@@ -842,6 +834,7 @@ int read_patch_def_from_files(patch *ppatch, char **fileslist, int filestotal) {
     parsed_module = 0; // first module will be 1
 
     for (f = 0; f < filestotal; f++) {
+        FILE *file;
         char filename_try[100] = "./bank/";
         strcat(filename_try, fileslist[f]);
         if ((file = fopen(filename_try, "r")) == NULL)
@@ -952,7 +945,6 @@ int execute_shell_command(char *line) {
 int command_interpreter(char *line) {
     char *command;
     char *params[32];
-    char ret[100];
     int paramsnum = 0;
     patch *ppatch = &patches[ui.selected_patch];
     char tmpline[LIST_LINE_LEN];
