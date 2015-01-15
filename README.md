@@ -7,11 +7,20 @@ ALSA based synthesizer for Linux terminal
 * Run `make termsynth`
 * Run `./termsynth hw:0`
 * Connect the (virtual) MIDI keyboard by typing in termsynth command prompt: `exec aconnect 'Your Keyboard Name' 'termsynth'`
-* Press tab to read a patch
+* Press `TAB` to read a patch
 * Navigate in patch bank using arrow keys (`UP`/`DOWN` - change bank, `LEFT`/`RIGHT` - change patch)
 * Press `ENTER` to read a selected patch
 * Play
 * Type `quit` to exit
+
+### Loading multiple patches
+
+* When started, termsynth display the contents of the patch 0
+* Use `LEFT`/`RIGHT` keys to change patch number (patch slot)
+* In another patch slot, press `TAB` to load a patch definition from bank
+* Patch 0 is set to receive MIDI data from MIDI channel 0 (MIDI channels are numbered 0 - 15)
+* All other patch slots have MIDI channel set to -1, which means they will not receive MIDI data by default
+* To set the MIDI channel of a patch slot to e.g. 0, run command `midichannel 0`
 
 ## Defining patches
 
