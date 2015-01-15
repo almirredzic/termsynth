@@ -40,6 +40,21 @@ Example - use three patches accross the keyboard
 * Go to the second patch slot and run `startnote 61` and the run `endnote 72`
 * Go to the third patch slot and run `startnote 73` and the run `endnote 127`
 
+### Adding effects
+
+Effects are designed just like regular patches, with only one difference: they take input from regular patches or other effect patches (in case effects are chained).
+
+To load a patch with one or more effects added, do the following:
+
+* Press `TAB` once
+* Using arrow keys select a regular patch
+* Press `TAB` once more
+* Again, using arrow keys, select an effect patch (patches stored in the `effects` bank)
+* To add more effects to the chain, just press `TAB` once again
+* When done press `ENTER` to read all selected patches into the patch slot
+
+Because of the way the effect patches are designed, loading regular patch with one or more effects added is nothing else but reading multiple patch files in sequence. Permanent addition of an effect to a regular patch can be done simply by appending the contents of the effect patch file to the contents of the regular patch file. Or, even simpler, after loading the patch together with the effects, running the command `write somenewpatchwitheffects`.
+
 ## Defining patches
 
 Patch definitions are simple human-readable text files. Each line in a patch definition file represents one module. Patch definition file should end with a new line.
