@@ -13,6 +13,8 @@ ALSA based synthesizer for Linux terminal
 * Play
 * Type `quit` to exit
 
+Patch can also be loaded by typing `read patchname` into termsynth command prompt.
+
 ### Loading multiple patches
 
 * When started, termsynth display the contents of the patch 0
@@ -53,7 +55,25 @@ To load a patch with one or more effects added, do the following:
 * To add more effects to the chain, just press `TAB` once again
 * When done press `ENTER` to read all selected patches into the patch slot
 
+Patch with effects added can also be loaded by typing `read patchname effect1name effect2name...` into termsynth command prompt.
+
 Because of the way the effect patches are designed, loading regular patch with one or more effects added is nothing else but reading multiple patch files in sequence. Permanent addition of an effect to a regular patch can be done simply by appending the contents of the effect patch file to the contents of the regular patch file. Or, even simpler, after loading the patch together with the effects, running the command `write somenewpatchwitheffects`.
+
+### Patch randomization
+
+It is possible to define patches that way, that on each patch load, patch modules get different values for their parameters. In module definition, instead the exact parameter value, e.g. `type=saw` for oscillator waveform type, you can write `type=saw|sine|square|triangle` and on each patch load this oscillator waveform would get a random shape (from the set of the four possible values defined).
+
+To get a feeling how this patch randomization can be used, do the following:
+
+* Press `TAB` to activate the patch bank
+* Load the `template/randfm` patch
+* Play some notes
+* Press `TAB` again - patch `template/randfm` should already be selected, so just press `ENTER` to load it
+* Play some notes again - notice the difference in patch definition and sound
+* To load a new random combination of parameter values, just press `TAB` and `ENTER` again
+* When you get some interesting result, save it using `write patchname` command.
+
+To create a new template like `randfm`, simply copy one of the existing patches from the `bank1` to the `template` bank and using a text editor replace a couple of parameter values with a sequence of '|' delimited possible values.
 
 ## Defining patches
 
