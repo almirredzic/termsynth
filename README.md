@@ -21,6 +21,24 @@ ALSA based synthesizer for Linux terminal
 * Patch 0 is set to receive MIDI data from MIDI channel 0 (MIDI channels are numbered 0 - 15)
 * All other patch slots have MIDI channel set to -1, which means they will not receive MIDI data by default
 * To set the MIDI channel of a patch slot to e.g. 0, run command `midichannel 0`
+* Each patch volume is 1.0 by default
+* To set the volume of a patch to e.g. 0.5, run `volume 0.5`
+
+### Layering
+
+* Simply set the same MIDI channel for two or more patches
+* Set the volume for each patch to get the desired volume ratio
+
+### Keyboard splitting
+
+* Set the same MIDI channel for two or more patches
+* Each patch slot receive the full range of MIDI notes by default (0 - 127) and this range can be changed
+
+Example - use three patches accross the keyboard
+
+* Go to the first patch slot and run `startnote 0` and then run `endnote 60`
+* Go to the second patch slot and run `startnote 61` and the run `endnote 72`
+* Go to the third patch slot and run `startnote 73` and the run `endnote 127`
 
 ## Defining patches
 
