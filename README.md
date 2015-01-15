@@ -1,7 +1,7 @@
 # termsynth
 ALSA based synthesizer for Linux terminal
 
-## How to try it (only basic usage explained)
+## Using termsynth
 
 * Download it
 * Run `make termsynth`
