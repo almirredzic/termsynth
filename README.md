@@ -104,7 +104,7 @@ If a module reference begins with any other character, it is treated as a module
 To take input from its own output, a module should have the input defined as `some_input:=+0` or `some_input:=-0`.
 
 
-##osc module
+##Module osc (oscillator)
 
 ####phase:
 ***Meaning:*** Phase modulation input
