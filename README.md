@@ -183,6 +183,7 @@ detune=0 frequency=200
 
 ####harmonics
 ***Meaning:*** Number of harmonics in the oscillator's waveform
+
 ***Default value:*** 64
 
 ***Description:*** This parameter sets the number of harmonics in case the waveform is set to saw, square, triangle or pulse. If the waveform is set to sine, this parameter has no effect.
