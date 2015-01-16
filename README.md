@@ -102,3 +102,74 @@ If a module reference begins with a '+' or a '-' character, it is treated as a r
 If a module reference begins with a digit ('0' ... '9'), it is treated as an absolute module position.
 If a module reference begins with any other character, it is treated as a module name.
 To take input from its own output, a module should have the input defined as `some_input:=+0` or `some_input:=-0`.
+
+
+##osc module
+
+###Inputs
+
+####phase:
+***Meaning:*** Phase modulation input
+***Default value:*** -1 (no input signal)
+***Description:*** Oscillator's phase will be modulated by the signal from this input. This kind of modulation is used in DX7 and similar synths.
+
+####pitch:
+***Meaning:*** Pitch modulation input
+***Default value:*** -1 (no input signal)
+***Description:*** Oscillator's frequency will be modulated by the 2 ^ input_signal_value. If the input value oscillates between -1 and 1,
+frequency of the oscillator will be oscillating from 0.5 * f and 2 * f (one octave below and on octave above the original frequency)
+
+####amp:
+***Meaning:*** Amplitude modulation input
+***Default value:*** -1 (no input signal)
+***Description:*** Oscillator's output signal will be multiplied by the input signal. This kind of modulation is also known as the ring modulation.
+To obtain an amplitude modulation effect, unipolar input signal should be used.
+
+###Parameters
+
+####detune
+***Meaning:*** Detune factor for for the oscillator's frequency
+***Default value:*** 1.0
+***Description:*** Oscillator's frequency is by default set to the frequency of the MIDI note that triggered the voice. Oscillator's frequency will be multiplied by the value of this parameter.
+The value of this parameter can be expressed as a number or in semitones and/or cents:
+```
+detune=0
+detune=1.001
+detune=0.5
+detune=10.0
+detune=semi:-5
+detune=semi:12
+detune=cent:-2
+detune=cent:2
+detune=semi:-1,cent:-23
+```
+
+####frequency
+***Meaning:*** Frequency offset for the oscillator's frequency
+***Default value:*** 0.0 (expressed in Hertz)
+***Description:*** The value of this parameter is added to the frequency of the oscillator.
+It is usually used together with the detune parameter to specify fixed oscillator frequency, regardles of the MIDI note that triggered the voice, e.g. for LFO oscillators or drum sounds:
+```
+detune=0 frequency=0.5
+detune=0 frequency=200
+```
+
+####type
+***Meaning:*** Oscillator waveform type
+***Default value:*** sine
+***Possible values:*** sine, saw, square, triangle, pulse
+***Description:*** This parameter sets the waveform shape of the oscillator.
+
+####harmonics
+***Meaning:*** Number of harmonics in the oscillator's waveform
+***Default value:*** 64
+***Description:*** This parameter sets the number of harmonics in case the waveform is set to saw, square, triangle or pulse.
+If the waveform is set to sine, this parameter has no effect.
+***Note:*** Oscillator waveforms in termsynth are generated as harmonic series (by adding sine signals of different frequency and amplitude) and stored into wavetables.
+Using an oscillator with a high number of harmonics can cause aliasing if the patch is played in the upper keyboard range.
+
+####pulsewidth
+***Meaning:*** Pulse width of the pulse waveform
+***Default value:*** 50 (Expressed in percent)
+***Description:*** If the oscillator's waveform is set to pulse, this parameter will set the pulse width of the waveform. Otherwise, it will be ignored.
+***Note:*** There is no pulse width modulation implemented in termsynth. To get a similar effect, try mixing the outputs from two slightly detuned saw oscillators.
