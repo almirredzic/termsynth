@@ -162,7 +162,7 @@ detune=semi:-1,cent:-23
 ***Default value:*** 0.0 (expressed in Hertz)
 
 ***Description:*** The value of this parameter is added to the frequency of the oscillator.
-It is usually used together with the detune parameter to specify fixed oscillator frequency, regardles of the MIDI note that triggered the voice, e.g. for LFO oscillators or drum sounds:
+It is usually used together with the detune parameter to specify fixed oscillator frequency, regardless of the MIDI note that triggered the voice, e.g. for LFO oscillators or drum sounds:
 ```
 detune=0 frequency=0.5
 detune=0 frequency=200
@@ -322,7 +322,7 @@ Envelope will stay in this phase as long as the MIDI note that triggered the voi
 ***Note:*** Release phase is the phase activated when "the key is released" and does not have to start after the sustain phase.
 If the key is released sometimes during the attack, decay or second decay phase, envelope will immediately go to the release phase.
 
-***Note:*** Attack envelope segment does not have to be rising. Also the decay and second decay segments do not have to be falling.
+***Note:*** Attack segment does not have to be rising. Also the decay and second decay segments do not have to be falling.
 Since it is possible to set the start and end level for each phase, then, for example, l0 can have a greater value than l1.
 Also the l3 can be set to a greater value than l2, so envelope can rise to the sustain value after the decay phase finish (envelope
 shape commonly used for brass sounds).
