@@ -201,3 +201,130 @@ Using an oscillator with a high number of harmonics can cause aliasing if the pa
 ***Description:*** If the oscillator's waveform is set to pulse, this parameter will set the pulse width of the waveform. Otherwise, it will be ignored.
 
 ***Note:*** There is no pulse width modulation implemented in termsynth. To get a similar effect, try mixing the outputs from two slightly detuned saw oscillators.
+
+##Module env (envelope)
+
+####amp:
+***Meaning:*** Amplitude modulation input
+
+***Default value:*** -1 (no input signal)
+
+***Description:*** Envelope output will be multiplied by the input signal.
+
+---
+
+####shape
+***Meaning:*** Shape of the envelope segments
+
+***Default value:*** natural
+
+***Possible values:*** natural, linear
+
+***Description:*** This parameter sets the shape of envelope segments. A linear shaped envelope consists of straight lines.
+A natural shaped envelope consist of curved lines. This kind of envelope shape is more common in natural acoustic sounds.
+In rising segments, natural shaped envelope first rises fast and then slow to the target level.
+In falling segments, it drops fast and then slow to the target level.
+
+***Note:*** In termsynth, for turning linear into natural envelope segment shapes, a square root function is used.
+
+---
+
+####t0
+***Meaning:*** Delay time
+
+***Default value:*** 0.0 (Expressed in seconds)
+
+***Description:*** Time before the envelope's attack phase starts. During this time, envelope module will output value l0.
+
+---
+
+####l0
+***Meaning:*** Start level
+
+***Default value:*** Value of l4 (End level with default value 0.0)
+
+***Description:*** Start level of the envelope's attack phase.
+
+
+---
+
+####t1
+***Meaning:*** Attack time
+
+***Default value:*** 0.01 (Expressed in seconds)
+
+***Description:*** Envelope's attack phase duration.
+
+---
+
+####l1
+***Meaning:*** Attack level
+
+***Default value:*** 1.0
+
+***Description:*** Level reached at the end of the attack phase.
+
+---
+
+####t2
+***Meaning:*** Decay time
+
+***Default value:*** 0.0001 (Expressed in seconds)
+
+***Description:*** Envelope's decay phase duration.
+
+---
+
+####l2
+***Meaning:*** Breakpoint level
+
+***Default value:*** Value of l3 (Sustain level with default value 1.0)
+
+***Description:*** Level reached at the end of the decay phase.
+
+---
+
+####t3
+***Meaning:*** Second decay time
+
+***Default value:*** 0.0001 (Expressed in seconds)
+
+***Description:*** Envelope's second decay phase duration.
+
+---
+
+####l3
+***Meaning:*** Sustain level
+
+***Default value:*** 1.0
+
+***Description:*** In the sustain phase envelope module will output a constant number set by this parameter.
+Envelope will stay in this phase as long as the MIDI note that triggered the voice is in ON state (as long as the key is pressed).
+
+---
+
+####t4
+***Meaning:*** Release time
+
+***Default value:*** 0.01 (Expressed in seconds)
+
+***Description:*** Envelope's release phase duration.
+
+---
+
+####l4
+***Meaning:*** End level
+
+***Default value:*** 0.0
+
+***Description:*** Level reached at the end of the release phase.
+
+***Note:*** Release phase is the phase activated when "the key is released" and does not have to start after the sustain phase.
+If the key is released sometimes during the attack, decay or second decay phase, envelope will immediately go to the release phase.
+
+***Note:*** Attack envelope segment does not have to be rising. Also the decay and second decay segments do not have to be falling.
+Since it is possible to set the start and end level for each phase, then, for example, l0 can have a greater value than l1.
+Also the l3 can be set to a greater value than l2, so envelope can rise to the sustain value after the decay phase finish (envelope
+shape commonly used for brass sounds).
+
+***Note:*** To get a "classical" ADSR envelope, only these parameters need to be used: t1, t2, l3, t4 (attack time, decay time, sustain level, release time).
