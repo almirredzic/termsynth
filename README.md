@@ -390,6 +390,6 @@ cutoff=hz:11025
 
 ***Description:*** This parameter sets the type of the filter.
 
-***Note:*** The filter module is a 12 dB/octave state varibale filter.
+***Note:*** The filter module is a 12 dB/octave state variable filter.
 
 
