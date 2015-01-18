@@ -328,3 +328,68 @@ Also the l3 can be set to a greater value than l2, so envelope can rise to the s
 shape commonly used for brass sounds).
 
 ***Note:*** To get a "classical" ADSR envelope, only these parameters need to be used: t1, t2, l3, t4 (attack time, decay time, sustain level, release time).
+
+##Module flt (filter)
+
+####input:
+***Meaning:*** Input signal
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+---
+
+####cutoff:
+***Meaning:*** Cutoff frequency modulation input
+
+***Default value:*** -1 (no input signal)
+
+***Description:*** Cutoff input signal value will be added to the filter's cutoff frequency.
+The final cutoff frequency should be in 0.0 to 1.0 range (0 Hz to 22050 Hz).
+
+---
+
+####resonance:
+***Meaning:*** Resonance modulation input
+
+***Default value:*** -1 (no input signal)
+
+***Description:*** Resonance input signal value will be added to the filter's resonance.
+The final resonance should be in 0.0 to 1.0 range.
+
+---
+
+####cutoff
+***Meaning:*** Cutoff frequency
+
+***Default value:*** 1.0 (equals 22050 Hz)
+
+***Description:*** Filter's cutoff frequency normalized to 0.0 to 1.0 range.
+The value of this parameter can be also expressed in hertz (Hz):
+```
+cutoff=0.5
+cutoff=hz:11025
+```
+
+---
+
+####resonance
+***Meaning:*** Resonance
+
+***Default value:*** 0.0
+
+***Description:*** Filter's resonance amount.
+
+---
+
+####type
+***Meaning:*** Filter type
+
+***Default value:*** lowpass
+
+***Possible values:*** lowpass, highpass, bandpass, bandstop
+
+***Description:*** This parameter sets the type of the filter.
+
+***Note:*** The filter module is a 12 dB/octave state varibale filter.
+
+
