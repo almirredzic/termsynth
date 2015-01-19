@@ -427,3 +427,69 @@ cutoff=hz:11025
 ***Description:*** Input signals whose product will be returned as the multiplier output.
 
 ***Note:*** This kind of module is also known as ring modulator.
+
+##Module mod (modifier)
+
+####input:
+***Meaning:*** Input to the modifier module
+
+***Default value:*** -1 (no input signal)
+
+***Description:*** Input signal that will be modified by the module. If the input is not connected, the value determined with the 'source' parameter will be used as the input value.
+
+####source
+***Meaning:*** Source of the input value
+
+***Default value:*** frequency (scaled to 0.0 - 1.0 from 0 Hz - 22050 Hz)
+
+***Possible values:*** frequency, velocity, controller, 1/frequency, pitchwheel, midinote
+
+***Description:*** Source of the input value that will be modified by the module.
+The following sources are available:
+* frequency - MIDI note frequency, normalized from (0 Hz, 22050) to (0.0, 1.0) range
+* velocity - MIDI note velocity, normalized from (0, 127) to (0.0, 1.0) range
+* controller - MIDI controller value, normalized from (0, 127) to (0.0, 1.0) range. The number of the controller is determined by the 'number' parameter.
+* 1/frequency - MIDI note frequency, normalized from (0 Hz, 22050) to (0.0, 1.0) range, then inverted
+* pitchwheel - MIDI pitch wheel value normalized to (-1.0, 1.0) range
+* midinote - MIDI note value (0, 127)
+
+####number
+***Meaning:*** Number of the MIDI controller
+
+***Default value:*** 1 (Modulation wheel)
+
+***Possible values:*** 1 - 127
+
+***Description:*** If the 'controller' is set as the 'source' parameter value, this parameter will select the MIDI controller from which the MIDI CC data will be read.
+
+####amp
+***Meaning:*** Amplification factor for the source or input value
+
+***Default value:*** 1.0
+
+***Description:*** Value obtained from the input or from a specified source will be multiplied by this parameter's value.
+
+####offset
+***Meaning:*** Offset for the amplified source or input value
+
+***Default value:*** 1.0
+
+***Description:*** Value obtained from the input or from a specified source and multiplied by the value of the 'amp' parameter will be increased/decreased by the value of this parameter.
+
+####scale
+***Meaning:*** A function that will scale the amplified and offsetted input/source value
+
+***Default value:*** none
+
+***Possible values:*** none, exp2, inv, int, abs
+
+***Description:*** The function of the modifier module can be explained by this expression:
+```
+module_output = scale_function ( input_or_source_value * amp_value + offset_value )
+```
+The following scaling functions are available:
+* none - f(x) = x, no scaling function is used, only amplification and offset
+* exp2 - f(x) = 2 ^ x
+* inv -  f(x) = 1 / x
+* int -  f(x) = int(x), taking only the integer part of the value
+* abs -  f(x) = |x|, absolute value
