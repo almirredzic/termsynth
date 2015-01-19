@@ -392,4 +392,31 @@ cutoff=hz:11025
 
 ***Note:*** The filter module is a 12 dB/octave state variable filter.
 
+##Module mix (mixer)
+
+####a: b: c: d: e: f:
+***Meaning:*** Six inputs
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+***Description:*** Input signals that will be summed and returned as the mixer output.
+
+---
+
+####crossfade:
+***Meaning:*** Crossfade input signal
+
+***Default value:*** -1 (no input signal)
+
+***Description:*** If this input is not connected, output from the mixer will be a simple sum of its inputs.
+* If the crossfade input signal is in range 0.0 to 1.0, output will be a combination of signals from a: and b: inputs.
+* If the crossfade input signal is in range 1.0 to 2.0, output will be a combination of signals from b: and c: inputs.
+* If the crossfade input signal is in range 2.0 to 3.0, output will be a combination of signals from c: and d: inputs.
+* If the crossfade input signal is in range 3.0 to 4.0, output will be a combination of signals from d: and e: inputs.
+* If the crossfade input signal is in range 4.0 to 5.0, output will be a combination of signals from e: and f: inputs.
+
+***Note:*** By using an envelope signal as a crossfade input signal and oscillators with the same frequency and different waveforms as inputs, a wavetable-like synthesis method can be implemented.
+
+---
+
 
