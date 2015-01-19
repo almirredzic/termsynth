@@ -437,6 +437,8 @@ cutoff=hz:11025
 
 ***Description:*** Input signal that will be modified by the module. If the input is not connected, the value determined with the 'source' parameter will be used as the input value.
 
+---
+
 ####source
 ***Meaning:*** Source of the input value
 
@@ -453,6 +455,10 @@ The following sources are available:
 * pitchwheel - MIDI pitch wheel value normalized to (-1.0, 1.0) range
 * midinote - MIDI note value (0, 127)
 
+***Note:*** The 'source' parameter and the 'input:' are mutually exclusive. if both are specified, value from the 'input:' will be used.
+
+---
+
 ####number
 ***Meaning:*** Number of the MIDI controller
 
@@ -462,6 +468,8 @@ The following sources are available:
 
 ***Description:*** If the 'controller' is set as the 'source' parameter value, this parameter will select the MIDI controller from which the MIDI CC data will be read.
 
+---
+
 ####amp
 ***Meaning:*** Amplification factor for the source or input value
 
@@ -469,12 +477,16 @@ The following sources are available:
 
 ***Description:*** Value obtained from the input or from a specified source will be multiplied by this parameter's value.
 
+---
+
 ####offset
 ***Meaning:*** Offset for the amplified source or input value
 
 ***Default value:*** 1.0
 
 ***Description:*** Value obtained from the input or from a specified source and multiplied by the value of the 'amp' parameter will be increased/decreased by the value of this parameter.
+
+---
 
 ####scale
 ***Meaning:*** A function that will scale the amplified and offsetted input/source value
