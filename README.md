@@ -495,7 +495,7 @@ The following sources are available:
 
 ***Possible values:*** none, exp2, inv, int, abs
 
-***Description:*** The function of the modifier module can be explained by this expression:
+***Description:*** The functioning of the modifier module can be explained by this expression:
 ```
 module_output = scale_function ( input_or_source_value * amp_value + offset_value )
 ```
