@@ -417,8 +417,6 @@ cutoff=hz:11025
 
 ***Note:*** By using an envelope signal as a crossfade input signal and oscillators with the same frequency and different waveforms as inputs, a wavetable-like synthesis method can be implemented.
 
----
-
 ##Module mul (multiplier)
 
 ####a: b:
