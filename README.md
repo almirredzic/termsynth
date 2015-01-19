@@ -502,6 +502,6 @@ module_output = scale_function ( input_or_source_value * amp_value + offset_valu
 The following scaling functions are available:
 * none - f(x) = x, no scaling function is used, only amplification and offset
 * exp2 - f(x) = 2 ^ x
-* inv -  f(x) = 1 / x
-* int -  f(x) = int(x), taking only the integer part of the value
-* abs -  f(x) = |x|, absolute value
+* inv - f(x) = 1 / x
+* int - f(x) = int(x), taking only the integer part of the value
+* abs - f(x) = |x|, absolute value
