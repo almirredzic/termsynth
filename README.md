@@ -419,4 +419,13 @@ cutoff=hz:11025
 
 ---
 
+##Module mul (multiplier)
 
+####a: b:
+***Meaning:*** Two inputs
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+***Description:*** Input signals whose product will be returned as the multiplier output.
+
+***Note:*** This kind of module is also known as ring modulator.
