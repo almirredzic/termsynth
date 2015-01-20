@@ -13,6 +13,12 @@ ALSA based synthesizer for Linux terminal
   - [Example 1](#example-1)
 - [Module osc (oscillator)](#module-osc-oscillator)
 - [Module env (envelope)](#module-env-envelope)
+- [Module flt (filter)](#module-flt-filter)
+- [Module mix (mixer)](#module-mix-mixer)
+- [Module mul (multiplier)](#module-mul-multiplier)
+- [Module mod (modifier)](#module-mod-modifier)
+- [Module pol (polynomial function)](#module-pol-polynomial-function)
+- [Module clk (clock)](#module-clk-clock)
 
 ## Using termsynth
 
