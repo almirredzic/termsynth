@@ -19,6 +19,7 @@ ALSA based synthesizer for Linux terminal
 - [Module mod (modifier)](#module-mod-modifier)
 - [Module pol (polynomial function)](#module-pol-polynomial-function)
 - [Module clk (clock)](#module-clk-clock)
+- [Module seq (sequencer)](#module-seq-sequencer)
 
 ## Using termsynth
 
