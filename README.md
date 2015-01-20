@@ -1,6 +1,19 @@
 # termsynth
 ALSA based synthesizer for Linux terminal
 
+**Table of Contents**
+
+- [Using termsynth](#using-termsynth)
+  - [Loading multiple patches](#loading-multiple-patches)
+  - [Layering](#layering)
+  - [Keyboard splitting](#keyboard-splitting)
+  - [Adding effects](#adding-effects)
+  - [Patch randomization](#patch-randomization)
+- [Defining patches](#defining-patches)
+  - [Example 1](#example-1)
+- [Module osc (oscillator)](#module-osc-oscillator)
+- [Module env (envelope)](#module-env-envelope)
+
 ## Using termsynth
 
 * Download it
