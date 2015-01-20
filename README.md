@@ -505,3 +505,24 @@ The following scaling functions are available:
 * inv - f(x) = 1 / x
 * int - f(x) = int(x), taking only the integer part of the value
 * abs - f(x) = |x|, absolute value
+
+##Module pol (polynomial function)
+
+####input:
+***Meaning:*** Input to the polynomial module
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+***Description:*** Input signal that will be modified by the module.
+
+---
+
+####a7 a6 a5 a4 a3 a2 a1 a0
+***Meaning:*** Polynomial coefficients
+
+***Default value:*** 1.0 for a1, 0.0 for others (default function is f(x) = x)
+
+***Description:*** The polynomial function of this module has the follwing form:
+```
+f(x) = a7 * x^7 + a6 * x^6 + a5 * x^5 + a4 * x^4 + a3 * x^3 + a2 * x^2 + a1 * x + a0
+```
