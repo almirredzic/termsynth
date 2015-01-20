@@ -128,7 +128,7 @@ To take input from its own output, a module should have the input defined as `so
 ####phase:
 ***Meaning:*** Phase modulation input
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Oscillator's phase will be modulated by the signal from this input. This kind of modulation is used in DX7 and similar synths.
 
@@ -137,7 +137,7 @@ To take input from its own output, a module should have the input defined as `so
 ####pitch:
 ***Meaning:*** Pitch modulation input
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Oscillator's frequency will be modulated by the 2 ^ input_signal_value. If the input value oscillates between -1 and 1,
 frequency of the oscillator will be oscillating from 0.5 * f and 2 * f (one octave below and on octave above the original frequency)
@@ -147,7 +147,7 @@ frequency of the oscillator will be oscillating from 0.5 * f and 2 * f (one octa
 ####amp:
 ***Meaning:*** Amplitude modulation input
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Oscillator's output signal will be multiplied by the input signal. This kind of modulation is also known as the ring modulation.
 To obtain an amplitude modulation effect, unipolar input signal should be used.
@@ -226,7 +226,7 @@ Using an oscillator with a high number of harmonics can cause aliasing if the pa
 ####amp:
 ***Meaning:*** Amplitude modulation input
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Envelope output will be multiplied by the input signal.
 
@@ -360,7 +360,7 @@ shape commonly used for brass sounds).
 ####cutoff:
 ***Meaning:*** Cutoff frequency modulation input
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Cutoff input signal value will be added to the filter's cutoff frequency.
 The final cutoff frequency should be in 0.0 to 1.0 range (0 Hz to 22050 Hz).
@@ -370,7 +370,7 @@ The final cutoff frequency should be in 0.0 to 1.0 range (0 Hz to 22050 Hz).
 ####resonance:
 ***Meaning:*** Resonance modulation input
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Resonance input signal value will be added to the filter's resonance.
 The final resonance should be in 0.0 to 1.0 range.
@@ -425,7 +425,7 @@ cutoff=hz:11025
 ####crossfade:
 ***Meaning:*** Crossfade input signal
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** If this input is not connected, output from the mixer will be a simple sum of its inputs.
 * If the crossfade input signal is in range 0.0 to 1.0, output will be a combination of signals from a: and b: inputs.
@@ -452,7 +452,7 @@ cutoff=hz:11025
 ####input:
 ***Meaning:*** Input to the modifier module
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Input signal that will be modified by the module. If the input is not connected, the value determined with the 'source' parameter will be used as the input value.
 
@@ -551,7 +551,7 @@ f(x) = a7 * x^7 + a6 * x^6 + a5 * x^5 + a4 * x^4 + a3 * x^3 + a2 * x^2 + a1 * x 
 ####time:
 ***Meaning:*** Clock interval modification signal
 
-***Default value:*** -1 (no input signal)
+***Default value:*** (no input signal)
 
 ***Description:*** Input signal value will be added to the value of the clock interval set by the 'time' parameter.
 
