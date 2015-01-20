@@ -557,7 +557,7 @@ f(x) = a7 * x^7 + a6 * x^6 + a5 * x^5 + a4 * x^4 + a3 * x^3 + a2 * x^2 + a1 * x 
 
 ---
 
-####time:
+####time
 ***Meaning:*** Clock interval
 
 ***Default value:*** 0.0 (expressed in seconds)
