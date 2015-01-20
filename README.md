@@ -564,3 +564,57 @@ f(x) = a7 * x^7 + a6 * x^6 + a5 * x^5 + a4 * x^4 + a3 * x^3 + a2 * x^2 + a1 * x 
 
 ***Description:*** This parameter sets the duration of the clock cycle, that can be further modified by the 'time:' signal. When the end of the clock time interval is reached, clock module outputs 1.0 value once. Between the end of clock cycles, it will output 0.0 value.
 
+##Module seq (sequencer)
+
+####step:
+***Meaning:*** Step selection input
+
+***Default value:*** (no input signal)
+
+***Possible values:*** Steps are numbered for 0 to Number Of Steps - 1. If the input signal has the 0 value, the ouput of the module will be the value of the first step (step 0).
+
+***Description:*** Input signal for step selection. If the step number from this input is not an integer, a linear interpolation of two neighbour step values will be calculated as the module output.
+
+***Note:*** Sequencer module does not have its internal clock - it must use a step counter signal provided in the 'step:' input. Patch `bank1/sequencer` shows how to create step counter from clock and mixer modules.
+
+***Note:*** This module can also have a constant 'step:' input. In patches from the `dx7` bank, this module is used for keyboard scaling (mapping the note number to the modulation amount).
+
+---
+
+####steps
+***Meaning:*** Number of steps
+
+***Default value:*** 1
+
+***Possible values:*** 1 - 16
+
+***Description:*** Number of used steps.
+
+---
+
+####s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15
+***Meaning:*** Steps
+
+***Default value:*** Value of the 'default' parameter (which is 0.0)
+
+***Description:*** These parameters set step values for each step.
+
+---
+
+####default
+***Meaning:*** Default value for the steps whose values are not explicitly specified
+
+***Default value:*** 0.0
+
+***Description:*** This parameter sets the default value for the used steps that do not have the value explicitly specified.
+
+---
+
+####wrap
+***Meaning:*** Wrap around the number of used steps
+
+***Default value:*** yes
+
+***Possible values:*** yes, no
+
+***Description:*** If the wrap parameter is set to 'yes' and the selected step is greater than the number of used steps in the sequencer, selected step will be reduced by the number of used steps. If the wrap parameter is set to 'no', the selected step will be the last used step.
