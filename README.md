@@ -520,9 +520,9 @@ The following scaling functions are available:
 ####a7 a6 a5 a4 a3 a2 a1 a0
 ***Meaning:*** Polynomial coefficients
 
-***Default value:*** 1.0 for a1, 0.0 for others (default function is f(x) = x)
+***Default value:*** 1.0 for a1, 0.0 for other parameters (default function is f(x) = x)
 
-***Description:*** The polynomial function of this module has the follwing form:
+***Description:*** The polynomial function of this module has the following form:
 ```
 f(x) = a7 * x^7 + a6 * x^6 + a5 * x^5 + a4 * x^4 + a3 * x^3 + a2 * x^2 + a1 * x + a0
 ```
