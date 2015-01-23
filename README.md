@@ -21,6 +21,7 @@ ALSA based synthesizer for Linux terminal
 - [Module clk (clock)](#module-clk-clock)
 - [Module seq (sequencer)](#module-seq-sequencer)
 - [Module dly (delay)](#module-dly-delay)
+- [Module out (stereo output)](#module-out-stereo-output)
 
 ## Using termsynth
 
@@ -676,3 +677,23 @@ output = (1.0 - amount) * input_signal + amount * delayed_signal
 ***Possible values:*** Between -1.0 and 1.0
 
 ***Description:*** This parameter determines how much of the delayed signal will be sent back to the delay buffer. If the feedback coefficient has a negative value, signal returned to the buffer will be inverted.
+
+##Module out (stereo output)
+
+####left:
+***Meaning:*** Left channel input signal
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+***Description:*** Input signal that will be sent to the left channel.
+
+---
+
+####right:
+***Meaning:*** Right channel input signal
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+***Description:*** Input signal that will be sent to the right channel.
+
+***Note:*** If this module is not used, output of the patch, which is a mono signal, is sent equally to both channels. If used, this module should be the last module in the patch.
