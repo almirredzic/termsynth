@@ -20,6 +20,7 @@ ALSA based synthesizer for Linux terminal
 - [Module pol (polynomial function)](#module-pol-polynomial-function)
 - [Module clk (clock)](#module-clk-clock)
 - [Module seq (sequencer)](#module-seq-sequencer)
+- [Module dly (delay)](#module-dly-delay)
 
 ## Using termsynth
 
