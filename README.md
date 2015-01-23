@@ -619,3 +619,59 @@ f(x) = a7 * x^7 + a6 * x^6 + a5 * x^5 + a4 * x^4 + a3 * x^3 + a2 * x^2 + a1 * x 
 ***Possible values:*** yes, no
 
 ***Description:*** If the wrap parameter is set to 'yes' and the selected step is greater than the number of used steps in the sequencer, selected step will be reduced by the number of used steps. If the wrap parameter is set to 'no', the selected step will be the last used step.
+
+##Module dly (delay)
+
+####input:
+***Meaning:*** Input signal
+
+***Default value:*** 0 (zero module - a constant zero signal)
+
+***Description:*** Input signal that will be delayed by the module.
+
+---
+
+####time:
+***Meaning:*** Delay time modification signal
+
+***Default value:*** (no input signal)
+
+***Possible values:*** Any positive value smaller than the length of the delay buffer (values are expressed in seconds)
+
+***Description:*** The delay time of the module will be reduced by the value of the delay time input signal. The value of this signal should be positive and smaller than the defined delay time. For example: if the delay time set by the 'time' parameter is 0.01 (10 milliseconds), the value of the 'time:' input signal should be in range (0, 0.01).
+
+---
+
+####time
+***Meaning:*** Delay time
+
+***Default value:*** 0.01 (expressed in seconds)
+
+***Description:*** Delay time of the module.
+
+***Note:*** Since the delay buffer is reserved for each voice (16 voices per patch by default), setting the delay time over a couple of seconds could take significant memory.
+
+---
+
+####amount
+***Meaning:*** Amount of delayed the signal in the module output
+
+***Default value:*** 1.0 (only delayed signal, no original signal)
+
+***Possible values:*** 0.0 - 1.0
+
+***Description:*** This parameter sets the amount of delayed signal in the output. It is also known as the delay effect 'wet/dry' balance. For example: the value 0.0 will produce a signal identical to the input signal, while the 0.5 will produce a signal with the equal amount of the input and delayed signal. The formula used to calculate the output is:
+```
+output = (1.0 - amount) * input_signal + amount * delayed_signal
+```
+
+---
+
+####feedback
+***Meaning:*** Feedback amount (feedback coefficient)
+
+***Default value:*** 0.0 (no feedback)
+
+***Possible values:*** Between -1.0 and 1.0
+
+***Description:*** This parameter determines how much of the delayed signal will be sent back to the delay buffer. If the feedback coefficient has a negative value, signal returned to the buffer will be inverted.
