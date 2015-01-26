@@ -1,0 +1,10 @@
+dly input:=-1 time=0.029 feedback=0.76
+dly input:=-2 time=0.037 feedback=0.78
+dly input:=-3 time=0.041 feedback=0.83
+dly input:=-4 time=0.043 feedback=0.80
+mix a:=-1 b:=-2 c:=-3 d:=-4
+mod input:=-1 amp=0.25
+dly input:=-1 time=0.017 feedback=0.7 feedforward=-0.7
+dly input:=-1 time=0.005 feedback=0.7 feedforward=-0.7
+dly input:=-1 time=0.002 feedback=0.7 feedforward=-0.7
+mix a:=-10 b:=-1

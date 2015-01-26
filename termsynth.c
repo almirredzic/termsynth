@@ -689,7 +689,7 @@ int parse_module_definition(patch *ppatch, const char *line, int parsed_module) 
         "mix name=_ crossfade:=# a:=0 b:=0 c:=0 d:=0 e:=0 f:=0",
         "mul name=_ a:=0 b:=0",
         "flt name=_ input:=0 cutoff:=# resonance:=# cutoff=1.0 resonance=0.0 type=lowpass",
-        "dly name=_ input:=0 time:=# amount=1.0 feedback=0.0 time=0.01",
+        "dly name=_ input:=0 time:=# amount=1.0 feedback=0.0 time=0.01 feedforward=0.0",
         "seq name=_ step:=# default=0.0 steps=1 wrap=yes "
                     "s0=123.456 s1=123.456 s2=123.456 s3=123.456 s4=123.456 s5=123.456 s6=123.456 s7=123.456 s8=123.456 "
                     "s9=123.456 s10=123.456 s11=123.456 s12=123.456 s13=123.456 s14=123.456 s15=123.456",
@@ -1200,14 +1200,17 @@ static inline void dly(module *pmodule, voice *pvoice, int m) {
     double readpos = pvoice->moduledata[m][1]; // + 1;
     double amount = pmodule->fp[0];
     double feedback = pmodule->fp[1];
+    double feedforward = pmodule->fp[3];
     if (pmodule->inputs[1] > -1) readpos += pvoice->out[pmodule->inputs[1]] * 44100;
     readpos = fmod(readpos, pmodule->ip[0]);
     int x1 = (int) readpos;
     int x2 = x1 + 1;
     x2 %= pmodule->ip[0];
     double estvalue = (pvoice->largedata[m][x2] - pvoice->largedata[m][x1]) * (readpos - floor(readpos)) + pvoice->largedata[m][x1];
-    double y = input * (1.0 - amount) + estvalue * amount;    
-    pvoice->largedata[m][(int) pvoice->moduledata[m][1]] = input * (1 - feedback) + estvalue * feedback;    
+    double output = estvalue + input * feedforward;
+    double y = input * (1.0 - amount) + output * amount;
+    //pvoice->largedata[m][(int) pvoice->moduledata[m][1]] = input * (1 - feedback) + estvalue * feedback;
+    pvoice->largedata[m][(int) pvoice->moduledata[m][1]] = input + output * feedback;
     pvoice->moduledata[m][1] += 1;
     pvoice->moduledata[m][1] = (int) pvoice->moduledata[m][1] % pmodule->ip[0];
     pvoice->out[m] = y;
