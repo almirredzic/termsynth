@@ -678,6 +678,17 @@ output = (1.0 - amount) * input_signal + amount * delayed_signal
 
 ***Description:*** This parameter determines how much of the delayed signal will be sent back to the delay buffer. If the feedback coefficient has a negative value, signal returned to the buffer will be inverted.
 
+---
+
+####feedforward
+***Meaning:*** Feedforward amount (feedforward coefficient)
+
+***Default value:*** 0.0 (no feedforward)
+
+***Possible values:*** Between -1.0 and 1.0
+
+***Description:*** This parameter determines how much of the input signal will be mixed with the delayed signal. This signal will then be multiplied by the feedback constant and returned to the input of the delay buffer. The feedforward path is usually used to create allpass filter from delay line, by setting feedforward = - feedback.
+
 ##Module out (stereo output)
 
 ####left:
