@@ -8,39 +8,39 @@ env name=envp shape=linear t1=0.0000 l1=0.00 t2=0.0000 l2=0.00 t3=0.0000 l3=0.00
 mix name=ptot a:=envp b:=pwhl c:=mlfo
 mod name=pmod input:=ptot amp=0.083333333
 mod name=note source=midinote amp=0.05511811
-seq name=seq6 steps=8 step:=note interpolate=yes s0=0.71 s1=0.71 s2=0.71 s3=0.71 s4=0.71 s5=0.71 s6=0.71 s7=0.71
+seq name=seq6 steps=8 step:=note s0=0.71 s1=0.71 s2=0.71 s3=0.71 s4=0.71 s5=0.71 s6=0.71 s7=0.71
 mod name=vel6 source=velocity amp=0.1113 offset=-0.0871
 env name=env6 amp:=seq6 shape=linear t1=0.0150 l1=1.00 t2=0.0044 l2=0.94 t3=99.2252 l3=0.00 t4=7.4572 l4=0.00
 mix name=en6a a:=env6 b:=vel6
 mod name=en6b input:=en6a amp=15.875 offset=-12.161 scale=exp2
 osc name=osc6 pitch:=pmod amp:=en6b frequency=0.0000 detune=4.0000
-seq name=seq5 steps=8 step:=note interpolate=yes s0=0.72 s1=0.72 s2=0.72 s3=0.72 s4=0.72 s5=0.72 s6=0.72 s7=0.72
+seq name=seq5 steps=8 step:=note s0=0.72 s1=0.72 s2=0.72 s3=0.72 s4=0.72 s5=0.72 s6=0.72 s7=0.72
 mod name=vel5 source=velocity amp=0.1484 offset=-0.1161
 env name=env5 amp:=seq5 shape=linear t1=0.0091 l1=1.00 t2=0.0059 l2=0.94 t3=99.2252 l3=0.00 t4=10.7921 l4=0.00
 mix name=en5a a:=env5 b:=vel5
 mod name=en5b input:=en5a amp=15.875 offset=-12.161 scale=exp2
 osc name=osc5 pitch:=pmod amp:=en5b frequency=-0.0625 detune=1.0000 phase:=osc6
-seq name=seq4 steps=8 step:=note interpolate=yes s0=0.79 s1=0.79 s2=0.79 s3=0.79 s4=0.79 s5=0.79 s6=0.79 s7=0.79
+seq name=seq4 steps=8 step:=note s0=0.79 s1=0.79 s2=0.79 s3=0.79 s4=0.79 s5=0.79 s6=0.79 s7=0.79
 mod name=vel4 source=velocity amp=0.0742 offset=-0.0581
 env name=env4 amp:=seq4 shape=linear t1=0.1746 l1=0.99 t2=0.0000 l2=0.99 t3=53.6574 l3=0.50 t4=8.6603 l4=0.00
 mix name=en4a a:=env4 b:=vel4
 mod name=en4b input:=en4a amp=15.875 offset=-12.161 scale=exp2
 osc name=osc4 pitch:=pmod amp:=en4b frequency=0.0625 detune=1.0000
 mix name=inp3 a:=osc4 b:=osc5
-seq name=seq3 steps=8 step:=note interpolate=yes s0=1.00 s1=1.00 s2=1.00 s3=1.00 s4=1.00 s5=1.00 s6=1.00 s7=1.00
+seq name=seq3 steps=8 step:=note s0=1.00 s1=1.00 s2=1.00 s3=1.00 s4=1.00 s5=1.00 s6=1.00 s7=1.00
 mod name=vel3 source=velocity amp=0.0371 offset=-0.0290
 env name=env3 amp:=seq3 shape=linear t1=0.1446 l1=1.00 t2=3.9513 l2=0.94 t3=99.2252 l3=0.00 t4=0.5317 l4=0.00
 mix name=en3a a:=env3 b:=vel3
 mod name=en3b input:=en3a amp=15.875 offset=-12.161 scale=exp2
 osc name=osc3 pitch:=pmod amp:=en3b frequency=0.2188 detune=1.0000 phase:=inp3
 mod name=inp2 input:=osc2 amp=0.2005
-seq name=seq2 steps=8 step:=note interpolate=yes s0=0.78 s1=0.78 s2=0.78 s3=0.78 s4=0.78 s5=0.78 s6=0.78 s7=0.78
+seq name=seq2 steps=8 step:=note s0=0.78 s1=0.78 s2=0.78 s3=0.78 s4=0.78 s5=0.78 s6=0.78 s7=0.78
 mod name=vel2 source=velocity amp=0.0371 offset=-0.0290
 env name=env2 amp:=seq2 shape=linear t1=0.0054 l1=1.00 t2=5.0901 l2=0.94 t3=83.1869 l3=0.44 t4=16.9401 l4=0.00
 mix name=en2a a:=env2 b:=vel2
 mod name=en2b input:=en2a amp=15.875 offset=-12.161 scale=exp2
 osc name=osc2 pitch:=pmod amp:=en2b frequency=-0.1875 detune=1.0000 phase:=inp2
-seq name=seq1 steps=8 step:=note interpolate=yes s0=0.99 s1=0.99 s2=0.99 s3=0.99 s4=0.99 s5=0.99 s6=0.99 s7=0.99
+seq name=seq1 steps=8 step:=note s0=0.99 s1=0.99 s2=0.99 s3=0.99 s4=0.99 s5=0.99 s6=0.99 s7=0.99
 mod name=vel1 source=velocity amp=0.0742 offset=-0.0581
 env name=env1 amp:=seq1 shape=linear t1=0.1998 l1=0.99 t2=0.0000 l2=0.99 t3=53.6574 l3=0.50 t4=0.8649 l4=0.00
 mix name=en1a a:=env1 b:=vel1
