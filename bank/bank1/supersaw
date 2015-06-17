@@ -1,0 +1,19 @@
+mod name=pitch1r source=controller number=91 amp=0.01
+mod name=pitch1l input:=-1 amp=-1.0
+osc name=osc1r pitch:=pitch1r type=saw harmonics=32
+osc name=osc1l pitch:=pitch1l type=saw harmonics=32
+mod name=pitch2r source=controller number=93 amp=0.01
+mod name=pitch2l input:=-1 amp=-1.0
+osc name=osc2r pitch:=pitch2r type=saw harmonics=32
+osc name=osc2l pitch:=pitch2l type=saw harmonics=32
+mod name=pitch3r source=controller number=74 amp=0.01
+mod name=pitch3l input:=-1 amp=-1.0
+osc name=osc3r pitch:=pitch3r type=saw harmonics=32
+osc name=osc3l pitch:=pitch3l type=saw harmonics=32
+mix a:=osc1r b:=osc1l c:=osc2r d:=osc2l e:=osc3r f:=osc3l
+mod input:=-1 amp=0.16666666
+mod source=controller number=1
+mul a:=-1 b:=-2
+osc type=saw detune=1.0 harmonics=32
+mix a:=-1 b:=-2
+env amp:=-1 t1=0.01 t2=0.01 l3=0.9 t4=0.2

@@ -63,11 +63,12 @@
 #define TERM_INVERTED_OFF  "\033[27m"
 #define TERM_ALL_OFF       "\033[0m"
 
-enum KEY { KEY_UNKNOWN, KEY_ESCAPE, KEY_HOME, KEY_INSERT, KEY_END, KEY_PGUP, KEY_PGDN,
-           KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT,
-           KEY_SHIFT_RIGHT, KEY_SHIFT_LEFT,
-           KEY_TAB, KEY_BACKSPACE, KEY_SHIFT_TAB, KEY_ENTER
-         };
+enum {
+    KEY_UNKNOWN, KEY_ESCAPE, KEY_HOME, KEY_INSERT, KEY_END,
+    KEY_PGUP, KEY_PGDN, KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT,
+    KEY_SHIFT_RIGHT, KEY_SHIFT_LEFT, KEY_TAB,
+    KEY_BACKSPACE, KEY_SHIFT_TAB, KEY_ENTER
+};
 
 #define LIST_LINES       512
 #define LIST_LINE_LEN    512
@@ -81,13 +82,13 @@ typedef struct {
     int y;
     int width;
     int height;
-} list;
+} List;
 
 #define MAXBANK 14000
 
 typedef struct {
-    list mainlist;
-    list sidelist;
+    List mainlist;
+    List sidelist;
     int showcolor;
     char commandline[LIST_LINE_LEN];
     int winwidth;
@@ -103,9 +104,9 @@ typedef struct {
     int banksize;
     int selpatch[4];
     int selinput;
-} uistruct;
+} Uistruct;
 
-uistruct ui = {
+Uistruct ui = {
     .mainlist = {
         .buffer_pos = 0, .start_row = LIST_LINES - 1, .total = 0, .x = 1, .y = 1, .width = 4, .height = 4
     },
@@ -148,7 +149,7 @@ typedef struct {
     char   name[32];
     double midicc;  // scaled to [0, 1], used only by MOD
     double pitchwheel; // scaled to [-1, 1], used only by MOD
-} module;
+} Module;
 
 typedef struct {
     int    started;
@@ -165,7 +166,7 @@ typedef struct {
     int    imoduledata[MODULES][4];
     double out[MODULES];
     double *largedata[MODULES]; // dynamically allocated - used only as delay buffer
-} voice;
+} Voice;
 
 typedef struct {
     double *data;
@@ -173,9 +174,10 @@ typedef struct {
     int    type;
     int    harmonics;
     int    pulsewidth;
-} wave;
+} Wave;
 
 typedef struct {
+    int    effctrlused;
     int    modulesused;
     int    wavesused;
     int    midichannel;
@@ -184,12 +186,12 @@ typedef struct {
     int    minvelocity;
     double volume;
     char   name[32];
-    wave   waves[WAVES];
-    module modules[MODULES];
-    voice  voices[VOICES];
-} patch;
+    Wave   waves[WAVES];
+    Module modules[MODULES];
+    Voice  voices[VOICES];
+} Patch;
 
-static patch patches[PATCHES];
+static Patch patches[PATCHES];
 
 static unsigned int Rate;
 static double time_delta;
@@ -216,7 +218,8 @@ int command_interpreter(char*);
     returns string length, not counting escape sequences that end
     with 'm' - like colour, bold and underline attributes
 ********************************************************************/
-int strlen_noescape(const char *s) {
+int strlen_noescape(const char *s)
+{
     int count = 0, skip = 0;
     const char *t = s;
     while(*t != '\0') {
@@ -233,7 +236,8 @@ int strlen_noescape(const char *s) {
     truncates line to a specified size, not counting escape
     sequences, because they do not affect the length of visible text
 ********************************************************************/
-char* trunc_line_noescape(char *out, const char *in, int maxlen) {
+char* trunc_line_noescape(char *out, const char *in, int maxlen)
+{
     int count = 0, outpos = 0, skip = 0;
     const char *t = in;
     while(*t != '\0') {
@@ -250,7 +254,8 @@ char* trunc_line_noescape(char *out, const char *in, int maxlen) {
     return out;
 }
 
-void goto_xy(int x, int y) {
+void goto_xy(int x, int y)
+{
     int xoffset = 0;
     int yoffset = 0;
     if (ui.totalwinheight > MAX_HEIGHT) yoffset = (ui.totalwinheight - MAX_HEIGHT) / 2;
@@ -258,7 +263,8 @@ void goto_xy(int x, int y) {
     printf(TERM_PUT_CURSOR, y + yoffset, x + xoffset);
 }
 
-int show_list(list *l, int key) {
+int show_list(List *l, int key)
+{
     if (ui.skiplistshow) return 0;
     printf(TERM_HIDE_CURSOR);
     char tempstr[LIST_LINE_LEN];
@@ -286,7 +292,8 @@ int show_list(list *l, int key) {
     return 0;
 }
 
-void show_prompt() {
+void show_prompt()
+{
     goto_xy(1, ui.winheight);
     printf(TERM_ALL_OFF);
     if (ui.selinput > -1) printf(TERM_INVERTED);
@@ -296,7 +303,8 @@ void show_prompt() {
     printf(TERM_SHOW_CURSOR);
 }
 
-void handle_winch(int sig) {
+void handle_winch(int sig)
+{
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
     ui.totalwinwidth = w.ws_col;
@@ -317,7 +325,8 @@ void handle_winch(int sig) {
     show_prompt();
 }
 
-char* syntax_color(char *out, const char *in, int colornr) {
+char* syntax_color(char *out, const char *in, int colornr)
+{
     int i = 0, j = 0;
     char color[40];
     sprintf(color, TERM_256_FCOLOR, colornr);
@@ -353,7 +362,8 @@ char* syntax_color(char *out, const char *in, int colornr) {
     return out;
 }
 
-void add_line_to_list(list *l, const char *format, ...) {
+void add_line_to_list(List *l, const char *format, ...)
+{
     char message[LIST_LINE_LEN];
     va_list va;
     va_start(va, format);
@@ -367,7 +377,8 @@ void add_line_to_list(list *l, const char *format, ...) {
     show_list(l, 255);
 }
 
-void add_long_line_to_list(list *l, const char *line, int colornr, int breakoffset) {
+void add_long_line_to_list(List *l, const char *line, int colornr, int breakoffset)
+{
     char out[LIST_LINE_LEN];
     char colored[LIST_LINE_LEN];
     const char *t = line;
@@ -392,7 +403,8 @@ void add_long_line_to_list(list *l, const char *line, int colornr, int breakoffs
     add_line_to_list(l, "%s", syntax_color(colored, out, colornr));
 }
 
-void show_patch(int patchnr) {
+void show_patch(int patchnr)
+{
     ui.skiplistshow = 1;
     ui.mainlist.total = 0; // clear list
     ui.mainlist.buffer_pos = 0;
@@ -415,7 +427,8 @@ void show_patch(int patchnr) {
     show_list(&ui.mainlist, 255);
 }
 
-void handle_bank_keys(int key) {
+void handle_bank_keys(int key)
+{
     if (key == KEY_TAB) {
         if (ui.selinput < 0) strcpy(ui.commandline, "read ");
         if (ui.selinput < 3) ui.selinput += 1; else return;
@@ -458,7 +471,8 @@ void handle_bank_keys(int key) {
     show_prompt();
 }
 
-void *io_thread_function() {
+void *io_thread_function()
+{
     struct termios old_tio, new_tio;
     int key;
     tcgetattr(STDIN_FILENO, &old_tio); // get the terminal settings for STDIN
@@ -540,7 +554,8 @@ void *io_thread_function() {
  Waveform and wave-file handling section 
 ***********************************************************************************************************************/
 
-int write_stereo_wav_file(char *fileName, int rec_len[PATCHES]) {
+int write_stereo_wav_file(char *fileName, int rec_len[PATCHES])
+{
     static char RIFF[4] = { 82, 73, 70, 70 }; // RIFF
     static char STEREO_TEMPLATE[32] = { 87, 65, 86, 69, 102, 109, 116, 32,
                                        16, 0, 0, 0, 1, 0, 2, 0, 68, 172, 0, 0, 16,
@@ -563,7 +578,8 @@ int write_stereo_wav_file(char *fileName, int rec_len[PATCHES]) {
     return 0;
 }
 
-double* make_wave(int type, int harmonics, int pulsewidth, int size) {
+double* make_wave(int type, int harmonics, int pulsewidth, int size)
+{
     int i, j;
     double* buffer;
     double f, t = 0, max = 0, min = 0, absmax, r, omega, gibbs_fejer_window;
@@ -598,7 +614,8 @@ double* make_wave(int type, int harmonics, int pulsewidth, int size) {
     return buffer;
 }
 
-void clean_waveforms(int patch_nr) {
+void clean_waveforms(int patch_nr)
+{
     int i;
     for (i = 0; i < WAVES; i++) {
         if (patches[patch_nr].waves[i].data != NULL) free(patches[patch_nr].waves[i].data);
@@ -606,7 +623,8 @@ void clean_waveforms(int patch_nr) {
     }
 }
 
-void clean_all() {
+void clean_all()
+{
     int i, j, k;
     for (i = 0; i < PATCHES; i++) {
         clean_waveforms(i);
@@ -619,7 +637,8 @@ void clean_all() {
     }
 }
 
-char* get_random_option(char *ret) {
+char* get_random_option(char *ret)
+{
     char *tp, *tv;
     char input_copy[100];
     char *options[32];
@@ -639,7 +658,8 @@ char* get_random_option(char *ret) {
     return ret;
 }
 
-char* get_param_value(char **ps, int np, const char *param_name, char *default_value, char *ret) {
+char* get_param_value(char **ps, int np, const char *param_name, char *default_value, char *ret)
+{
     int i;
     char ts[100];
     char *tp;
@@ -658,7 +678,8 @@ char* get_param_value(char **ps, int np, const char *param_name, char *default_v
     return ret;
 }
 
-double calculate_freq_detune(int semitone, int cent) {
+double calculate_freq_detune(int semitone, int cent)
+{
     double out = 1.0;
     out *= pow(2, semitone / 12); // octave detune
     semitone = semitone % 12;
@@ -667,7 +688,8 @@ double calculate_freq_detune(int semitone, int cent) {
     return out;
 }
 
-int parse_module_definition(patch *ppatch, const char *line, int parsed_module) {
+int parse_module_definition(Patch *ppatch, const char *line, int parsed_module)
+{
     char *command;
     char *params[32];
     char ret[100];
@@ -681,7 +703,7 @@ int parse_module_definition(patch *ppatch, const char *line, int parsed_module) 
         if (params[paramsnum] == NULL) break;
         paramsnum++;
     }
-    module *pmodule = &patches[ui.selected_patch].modules[parsed_module];
+    Module *pmodule = &patches[ui.selected_patch].modules[parsed_module];
     static char *templates[] = {
         "nop name=_",
         "osc name=_ phase:=# pitch:=# amp:=# detune=1.0 frequency=0.0 type=sine harmonics=64 pulsewidth=50",
@@ -767,6 +789,22 @@ int parse_module_definition(patch *ppatch, const char *line, int parsed_module) 
                 }
         }
     }
+    if (pmodule->type == MOD) {
+        if (pmodule->ip[1] == -1) {
+            ppatch->effctrlused += 1;
+            switch (ppatch->effctrlused) {
+                case 1: pmodule->ip[1] = 91; break;
+                case 2: pmodule->ip[1] = 93; break;
+                case 3: pmodule->ip[1] = 74; break;
+                case 4: pmodule->ip[1] = 71; break;
+                case 5: pmodule->ip[1] = 73; break;
+                case 6: pmodule->ip[1] = 75; break;
+                case 7: pmodule->ip[1] = 72; break;
+                case 8: pmodule->ip[1] = 10; break;
+                default: pmodule->ip[1] = 0; break;
+            }
+        }
+    }
     if (pmodule->type == SEQ) {
         int i;
         for (i = 0; i < 16; i++) if (pmodule->fp[i + 1] == 123.456) pmodule->fp[i + 1] = pmodule->fp[0];
@@ -812,7 +850,8 @@ int parse_module_definition(patch *ppatch, const char *line, int parsed_module) 
     }
 }
 
-int read_patch_def_from_files(patch *ppatch, char **fileslist, int filestotal) {
+int read_patch_def_from_files(Patch *ppatch, char **fileslist, int filestotal)
+{
     int parsed_module;
     char file_line[512];
     // stop all voices first
@@ -832,7 +871,8 @@ int read_patch_def_from_files(patch *ppatch, char **fileslist, int filestotal) {
     ppatch->wavesused = 0;
     clean_waveforms(ui.selected_patch);
     parsed_module = 0; // first module will be 1
-
+    ppatch->effctrlused = 0;
+    
     for (f = 0; f < filestotal; f++) {
         FILE *file;
         char filename_try[100] = "./bank/";
@@ -894,7 +934,8 @@ int read_patch_def_from_files(patch *ppatch, char **fileslist, int filestotal) {
     return 0;
 }
 
-int execute_script(char *filename) {
+int execute_script(char *filename)
+{
     FILE *file;
     char file_line[512];
     char filename_try[100] = "./script/";
@@ -911,7 +952,8 @@ int execute_script(char *filename) {
     return 0;
 }
 
-int write_patch_def(patch *ppatch, char *filename) {
+int write_patch_def(Patch *ppatch, char *filename)
+{
     FILE *file;
     if ((file = fopen(filename, "w")) == NULL) return 1;
     int i;
@@ -923,7 +965,8 @@ int write_patch_def(patch *ppatch, char *filename) {
     return 0;
 }
 
-int execute_shell_command(char *line) {
+int execute_shell_command(char *line)
+{
     FILE *fp;
     char output[1000];
     char allout[10000];
@@ -942,11 +985,12 @@ int execute_shell_command(char *line) {
     pclose(fp);
 }
 
-int command_interpreter(char *line) {
+int command_interpreter(char *line)
+{
     char *command;
     char *params[32];
     int paramsnum = 0;
-    patch *ppatch = &patches[ui.selected_patch];
+    Patch *ppatch = &patches[ui.selected_patch];
     char tmpline[LIST_LINE_LEN];
     strcpy(tmpline, line);
     command = strtok(tmpline, " \n");
@@ -984,7 +1028,8 @@ int command_interpreter(char *line) {
     return 0;
 }
 
-void initialize_default() {
+void initialize_default()
+{
     int i, j, k;
     time_delta = 1 / (double) Rate;
     for (i = 0; i < PATCHES; i++) {
@@ -1037,7 +1082,8 @@ void initialize_default() {
  http://alsamodular.sourceforge.net/alsa_programming_howto.html
 ***********************************************************************************************************************/
 
-snd_seq_t *open_seq() {
+snd_seq_t *open_seq()
+{
     snd_seq_t *seq_handle;   
     if (snd_seq_open(&seq_handle, "default", SND_SEQ_OPEN_DUPLEX, 0) < 0) {
         fprintf(stderr, "Cannot open ALSA sequencer.\n");
@@ -1051,7 +1097,8 @@ snd_seq_t *open_seq() {
     return seq_handle;
 }
 
-snd_pcm_t *open_pcm(char *pcm_name) {
+snd_pcm_t *open_pcm(char *pcm_name)
+{
     snd_pcm_t *playback_handle;
     snd_pcm_hw_params_t *hw_params;
     snd_pcm_sw_params_t *sw_params;
@@ -1076,9 +1123,10 @@ snd_pcm_t *open_pcm(char *pcm_name) {
     return playback_handle;
 }
 
-void note_on(int note, int channel, int velocity) {
+void note_on(int note, int channel, int velocity)
+{
     int i, j, k;
-    voice *pvoice;
+    Voice *pvoice;
     for (i = 0; i < PATCHES; i++) {
         if (patches[i].midichannel == channel && note >= patches[i].startnote && note <= patches[i].endnote) {
             for (j = 0; j < VOICES; j++) {
@@ -1111,9 +1159,10 @@ void note_on(int note, int channel, int velocity) {
     }
 }
 
-void note_off(int note, int channel) {
+void note_off(int note, int channel)
+{
     int i, j, k;
-    voice *pvoice;
+    Voice *pvoice;
     for (i = 0; i < PATCHES; i++) {
         for (j = 0; j < VOICES; j++) {
             pvoice = &patches[i].voices[j];
@@ -1131,7 +1180,8 @@ void note_off(int note, int channel) {
     }
 }
 
-int midi_callback() {
+int midi_callback()
+{
     snd_seq_event_t *ev;
     int i, k;
     do {
@@ -1162,7 +1212,8 @@ int midi_callback() {
  module processing section 
 ***********************************************************************************************************************/
 
-static inline double exp2_fast(double x) {
+static inline double exp2_fast(double x)
+{
     static double inv_logical_size = 0.03125; // 1.0/32.0
     double pos = EXP2TABLESIZE * (x + 16) * inv_logical_size;
     int pos1 = (int) pos;
@@ -1175,17 +1226,20 @@ static inline double exp2_fast(double x) {
     return exp2_table[pos1] + r * (exp2_table[pos2] - exp2_table[pos1]);
 }
 
-static inline double sqrt_fast(double x) {
+static inline double sqrt_fast(double x)
+{
     static double inv_logical_size = 0.9900990099; // 1.0/1.01
     double pos = SQRTTABLESIZE * (x + 0) * inv_logical_size;
     return sqrt_table[(int) pos];
 }
 
-static inline void nop(module *pmodule, voice *pvoice, int m) {
+static inline void nop(Module *pmodule, Voice *pvoice, int m)
+{
     pvoice->out[m] = 0;
 }
 
-static inline void pol(module *pmodule, voice *pvoice, int m) {
+static inline void pol(Module *pmodule, Voice *pvoice, int m)
+{
     int a;
     double x = 1.0;
     pvoice->out[m] = 0;
@@ -1195,7 +1249,8 @@ static inline void pol(module *pmodule, voice *pvoice, int m) {
     }
 }
 
-static inline void dly(module *pmodule, voice *pvoice, int m) {
+static inline void dly(Module *pmodule, Voice *pvoice, int m)
+{
     double input = pvoice->out[pmodule->inputs[0]];
     double readpos = pvoice->moduledata[m][1]; // + 1;
     double amount = pmodule->fp[0];
@@ -1216,7 +1271,8 @@ static inline void dly(module *pmodule, voice *pvoice, int m) {
     pvoice->out[m] = y;
 }
 
-static inline void env(module *pmodule, voice *pvoice, int m) {
+static inline void env(Module *pmodule, Voice *pvoice, int m)
+{
     int shape = pmodule->ip[0];
     double t = pvoice->moduledata[m][1];
     double *tparam = &(pmodule->fp[0]);
@@ -1240,7 +1296,8 @@ static inline void env(module *pmodule, voice *pvoice, int m) {
     if (pmodule->inputs[0] > -1) pvoice->out[m] *= pvoice->out[pmodule->inputs[0]]; // amp modulation of input
 }
 
-static inline double get_wave_value(double phase, int patchnr, int wave_nr) {
+static inline double get_wave_value(double phase, int patchnr, int wave_nr)
+{
     static double inv_pi = 1 / M_PI;
     int size = patches[patchnr].waves[wave_nr].size;
     double pos = phase * inv_pi * 0.5 * size;
@@ -1252,14 +1309,16 @@ static inline double get_wave_value(double phase, int patchnr, int wave_nr) {
         + patches[patchnr].waves[wave_nr].data[pos2] * r;
 }
 
-static inline double twopirange(double angle) {
+static inline double twopirange(double angle)
+{
     static double twopi = 2 * M_PI;
     while (angle > twopi) angle -= twopi;
     while (angle < 0) angle += twopi;
     return angle;
 }
 
-static inline void osc(module *pmodule, voice *pvoice, int m) {
+static inline void osc(Module *pmodule, Voice *pvoice, int m)
+{
     double fF, phaseDelta;
     static double two_pi = 2 * M_PI;
     fF = pvoice->frequency;
@@ -1276,7 +1335,8 @@ static inline void osc(module *pmodule, voice *pvoice, int m) {
     if (pmodule->inputs[2] > -1) pvoice->out[m] *= pvoice->out[pmodule->inputs[2]]; // amp modulation
 }
 
-static inline void seq(module *pmodule, voice *pvoice, int m) {
+static inline void seq(Module *pmodule, Voice *pvoice, int m)
+{
     int step = (int) pvoice->out[pmodule->inputs[0]];
     double r = pvoice->out[pmodule->inputs[0]] - step;
     int nextstep = step + 1;
@@ -1290,7 +1350,8 @@ static inline void seq(module *pmodule, voice *pvoice, int m) {
     pvoice->out[m] = pmodule->fp[step + 1] * (1.0 - r) + pmodule->fp[nextstep + 1] * r;
 }
 
-static inline void clk(module *pmodule, voice *pvoice, int m) {
+static inline void clk(Module *pmodule, Voice *pvoice, int m)
+{
     pvoice->moduledata[m][0] += time_delta;
     double clocktime = pmodule->fp[0];
     if (pmodule->inputs[0] > -1) clocktime += pvoice->out[pmodule->inputs[0]];
@@ -1301,7 +1362,8 @@ static inline void clk(module *pmodule, voice *pvoice, int m) {
     else pvoice->out[m] = 0.0;
 }
 
-static inline double state_variable_filter(int filterType, double *buffer, double inputValue, double resonance, double cutoff) {
+static inline double state_variable_filter(int filterType, double *buffer, double inputValue, double resonance, double cutoff)
+{
     // 0-Low 1-High 2-BandPass 3-BandStop
     int i;
     double inputs[3]; // 3x oversampled filter, sample rate = 44100 x 3, [0, 1] = [0 Hz, 22050 Hz]
@@ -1319,7 +1381,8 @@ static inline double state_variable_filter(int filterType, double *buffer, doubl
     return buffer[filterType];
 }
 
-static inline void flt(module *pmodule, voice *pvoice, int m) {
+static inline void flt(Module *pmodule, Voice *pvoice, int m)
+{
     double cutoff = pmodule->fp[0];
     double res = pmodule->fp[1];
     if (pmodule->inputs[1] > -1)
@@ -1334,7 +1397,8 @@ static inline void flt(module *pmodule, voice *pvoice, int m) {
         &(pvoice->moduledata[m][1]), pvoice->out[pmodule->inputs[0]], res, cutoff);
 }
 
-static inline void mix(module *pmodule, voice *pvoice, int m) {
+static inline void mix(Module *pmodule, Voice *pvoice, int m)
+{
     if (pmodule->inputs[0] < 0) { // no cross-fade
         pvoice->out[m] = pvoice->out[pmodule->inputs[1]] + pvoice->out[pmodule->inputs[2]]
                                    + pvoice->out[pmodule->inputs[3]] + pvoice->out[pmodule->inputs[4]]
@@ -1348,7 +1412,8 @@ static inline void mix(module *pmodule, voice *pvoice, int m) {
     }
 }
 
-static inline void mod(module *pmodule, voice *pvoice, int m) {
+static inline void mod(Module *pmodule, Voice *pvoice, int m)
+{
     if (pmodule->inputs[0] > -1) pvoice->out[m] = pvoice->out[pmodule->inputs[0]];
     else {
         if (pmodule->ip[0] == 3) pvoice->out[m] = pmodule->midicc; // read already calculated values
@@ -1369,23 +1434,26 @@ static inline void mod(module *pmodule, voice *pvoice, int m) {
     }
 }
 
-static inline void mul(module *pmodule, voice *pvoice, int m) {
+static inline void mul(Module *pmodule, Voice *pvoice, int m)
+{
     pvoice->out[m] = pvoice->out[pmodule->inputs[0]] * pvoice->out[pmodule->inputs[1]];
 }
 
-static inline void out(module *pmodule, voice *pvoice, int m) {
+static inline void out(Module *pmodule, Voice *pvoice, int m)
+{
     pvoice->moduledata[m][0] = pvoice->out[pmodule->inputs[0]];
     pvoice->moduledata[m][1] = pvoice->out[pmodule->inputs[1]];
     pvoice->out[m] = pvoice->moduledata[m][0] + pvoice->moduledata[m][1];
     pvoice->out[m] *= 0.5;
 }
 
-int playback_callback(snd_pcm_sframes_t nframes) {
+int playback_callback(snd_pcm_sframes_t nframes)
+{
     int i, j, k, m;
     double voices_left, voices_right;
-    voice *pvoice;
-    module *pmodule;
-    static void (*mod_fun[]) (module *pmodule, voice *pvoice, int m) =
+    Voice *pvoice;
+    Module *pmodule;
+    static void (*mod_fun[]) (Module *pmodule, Voice *pvoice, int m) =
         {nop, osc, env, mix, mul, flt, dly, seq, pol, mod, clk, out};
     memset(buf, 0, nframes * 4); // clean buffer
     for (i = 0; i < PATCHES; i++) {
@@ -1460,7 +1528,8 @@ int playback_callback(snd_pcm_sframes_t nframes) {
  main 
 ***********************************************************************************************************************/
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     pthread_t pth_io;
     int nfds, seq_nfds, i, j;
     struct pollfd *pfds;

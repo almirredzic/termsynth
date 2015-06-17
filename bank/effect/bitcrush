@@ -1,4 +1,4 @@
-mod source=controller amp=-30 offset=32
+mod source=controller number=-1 amp=-30 offset=32
 mod input:=-1 scale=inv
 mul a:=-3 b:=-2
 mod input:=-1 scale=int
